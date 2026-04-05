@@ -1,1 +1,558 @@
-<h1> Welcome to the home Project </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Student Performance Predictor — ML Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e0e10; --paper: #f4f1ea; --cream: #eae6dd;
+  --accent: #c8562a; --muted: #78746e; --border: #d8d3c8; --white: #fff;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); overflow-x: hidden; }
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 52px 52px; opacity: 0.3; pointer-events: none; z-index: 0;
+}
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(244,241,234,0.88); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 60px; display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--white); background: var(--accent); border: none; border-radius: 8px; padding: 8px 18px; cursor: pointer; text-decoration: none; transition: background 0.15s; }
+.nav-cta:hover { background: #a8421e; }
+section { position: relative; z-index: 1; }
+
+/* HERO */
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; padding: 80px; max-width: 1280px; margin: 0 auto; }
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); display: block; }
+h1.hero-title { font-family: 'Syne', sans-serif; font-size: clamp(40px, 5vw, 68px); font-weight: 800; line-height: 1.0; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 24px; }
+h1.hero-title em { font-style: normal; color: var(--accent); display: block; }
+.hero-desc { font-size: 15px; line-height: 1.75; color: var(--muted); max-width: 460px; margin-bottom: 36px; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--white); background: var(--ink); border: none; border-radius: 10px; padding: 13px 28px; cursor: pointer; text-decoration: none; transition: transform 0.12s, background 0.15s; }
+.btn-primary:hover { background: #2a2a2e; transform: translateY(-1px); }
+.btn-secondary { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 28px; cursor: pointer; text-decoration: none; transition: border-color 0.15s, transform 0.12s; }
+.btn-secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
+.hero-visual { display: flex; flex-direction: column; gap: 14px; }
+.stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 20px 24px; display: flex; align-items: center; gap: 18px; animation: fadeUp 0.6s ease both; }
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; margin-left: 36px; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.orange { background: #fde8df; } .blue { background: #dceeff; } .green { background: #dff3e6; }
+.stat-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); line-height: 1; }
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.section-divider { border: none; border-top: 1px solid var(--border); margin: 0 80px; }
+
+/* PIPELINE */
+.pipeline-section { padding: 100px 80px; max-width: 1280px; margin: 0 auto; }
+.section-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+h2.section-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; letter-spacing: -0.025em; color: var(--ink); line-height: 1.1; }
+.section-sub { margin-top: 12px; font-size: 15px; color: var(--muted); max-width: 520px; line-height: 1.65; }
+.section-header { margin-bottom: 56px; }
+.pipeline-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+.pipeline-steps::before { content: ''; position: absolute; top: 31px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, var(--border), var(--accent), var(--border)); z-index: 0; }
+.pipeline-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px; position: relative; z-index: 1; }
+.step-num { width: 62px; height: 62px; border-radius: 50%; background: var(--white); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--accent); margin-bottom: 16px; transition: border-color 0.2s, box-shadow 0.2s; }
+.pipeline-step:hover .step-num { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(200,86,42,0.12); }
+.step-label { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.step-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+/* EDA */
+.eda-section { background: var(--ink); padding: 100px 80px; position: relative; overflow: hidden; }
+.eda-section::before { content: 'EDA'; position: absolute; right: -20px; top: -40px; font-family: 'Syne', sans-serif; font-size: 280px; font-weight: 800; color: rgba(255,255,255,0.03); pointer-events: none; user-select: none; }
+.eda-inner { max-width: 1280px; margin: 0 auto; }
+.eda-section .section-eyebrow { color: #c8a080; }
+.eda-section h2.section-title { color: var(--white); }
+.eda-section .section-sub { color: #8a8580; }
+.eda-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.eda-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; transition: background 0.2s, border-color 0.2s; }
+.eda-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(200,86,42,0.4); }
+.eda-card-num { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 10px; letter-spacing: 0.06em; }
+.eda-card-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+.eda-card-desc { font-size: 13px; color: #8a8580; line-height: 1.6; }
+.eda-findings { margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.finding { display: flex; align-items: flex-start; gap: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px 20px; }
+.finding-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+.finding-text { font-size: 13px; color: #a8a49e; line-height: 1.6; }
+.finding-text strong { color: var(--white); font-weight: 500; }
+
+/* CHARTS SECTION */
+.charts-section { padding: 100px 80px; max-width: 1280px; margin: 0 auto; }
+.charts-grid-top { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; margin-top: 52px; }
+.charts-grid-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
+.chart-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
+.chart-card-dark { background: var(--ink); border: 1px solid #2a2a2e; border-radius: 20px; padding: 28px; }
+.chart-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.chart-title-dark { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.chart-subtitle { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.chart-subtitle-dark { font-size: 12px; color: #666; margin-bottom: 20px; }
+.chart-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.legend-item-dark { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888; }
+
+/* MODELS */
+.models-section { padding: 100px 80px; max-width: 1280px; margin: 0 auto; }
+.models-layout { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; margin-top: 52px; }
+.model-row { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); }
+.model-row:last-child { border-bottom: none; }
+.model-row:first-child { border-top: 1px solid var(--border); }
+.model-rank { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--muted); width: 24px; text-align: right; flex-shrink: 0; }
+.model-name { font-size: 13px; font-weight: 500; color: var(--ink); flex: 1; min-width: 0; }
+.model-bar-wrap { flex: 2; height: 6px; background: var(--cream); border-radius: 3px; overflow: hidden; }
+.model-bar { height: 100%; border-radius: 3px; background: #b0b0b0; }
+.model-bar.best { background: var(--accent); }
+.model-score { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); width: 46px; text-align: right; flex-shrink: 0; }
+.best-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: #fde8df; border-radius: 20px; padding: 3px 10px; flex-shrink: 0; }
+.winner-card { background: var(--ink); border-radius: 20px; padding: 32px; }
+.winner-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #c8a080; margin-bottom: 8px; }
+.winner-model-name { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; letter-spacing: -0.02em; color: var(--white); margin-bottom: 24px; line-height: 1.05; }
+.winner-metrics { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.metric-box { background: rgba(255,255,255,0.07); border-radius: 12px; padding: 14px; text-align: center; }
+.metric-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--white); line-height: 1; }
+.metric-label { font-size: 10px; color: #8a8580; margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+.winner-desc { font-size: 13px; color: #8a8580; line-height: 1.65; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+/* STACK */
+.stack-section { background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px; }
+.stack-inner { max-width: 1280px; margin: 0 auto; }
+.stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+.stack-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: border-color 0.2s, transform 0.15s; }
+.stack-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.stack-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+.stack-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.stack-role { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.stack-tag { display: inline-block; margin-top: 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+.tag-ml { background: #fde8df; color: var(--accent); }
+.tag-data { background: #dceeff; color: #185fa5; }
+.tag-viz { background: #dff3e6; color: #1d6e3f; }
+.tag-web { background: #f0eaff; color: #5c39b5; }
+
+/* DATASET */
+.dataset-section { padding: 100px 80px; max-width: 1280px; margin: 0 auto; }
+.dataset-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; margin-top: 52px; }
+.feature-list { display: flex; flex-direction: column; gap: 10px; }
+.feature-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--white); transition: border-color 0.15s; }
+.feature-row:hover { border-color: var(--accent); }
+.feature-type { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; min-width: 52px; text-align: center; flex-shrink: 0; }
+.ft-cat { background: #fde8df; color: var(--accent); }
+.ft-num { background: #dceeff; color: #185fa5; }
+.ft-tgt { background: #dff3e6; color: #1d6e3f; }
+.feature-name { font-size: 13px; font-weight: 500; color: var(--ink); flex: 1; }
+.feature-vals { font-size: 11px; color: var(--muted); text-align: right; }
+.dataset-stats { display: flex; flex-direction: column; gap: 20px; }
+.ds-stat { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+.ds-stat-num { font-family: 'Syne', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
+.ds-stat-num span { font-size: 20px; color: var(--muted); font-weight: 400; }
+.ds-stat-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.ds-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ds-mini { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+.ds-mini-num { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--ink); }
+.ds-mini-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* CTA */
+.cta-section { background: var(--accent); padding: 80px; text-align: center; position: relative; overflow: hidden; }
+.cta-section::before { content: '→'; position: absolute; right: -40px; top: -60px; font-family: 'Syne', sans-serif; font-size: 400px; font-weight: 800; color: rgba(255,255,255,0.07); pointer-events: none; }
+.cta-inner { position: relative; z-index: 1; }
+.cta-title { font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 56px); font-weight: 800; letter-spacing: -0.025em; color: var(--white); margin-bottom: 16px; line-height: 1.05; }
+.cta-sub { font-size: 16px; color: rgba(255,255,255,0.75); margin-bottom: 36px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+.cta-btn { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: var(--white); border: none; border-radius: 12px; padding: 16px 40px; cursor: pointer; text-decoration: none; display: inline-block; transition: transform 0.15s, box-shadow 0.15s; }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+footer { background: var(--ink); padding: 32px 80px; display: flex; align-items: center; justify-content: space-between; }
+.footer-logo { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
+.footer-logo span { color: var(--accent); }
+.footer-note { font-size: 12px; color: #555; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+.hero-left { animation: fadeUp 0.7s 0.05s ease both; }
+.hero-visual { animation: fadeUp 0.7s 0.2s ease both; }
+
+@media (max-width: 900px) {
+  nav { padding: 0 24px; } .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 60px 28px; min-height: auto; } .hero-visual { display: none; }
+  .pipeline-section, .models-section, .dataset-section, .charts-section { padding: 60px 28px; }
+  .pipeline-steps { grid-template-columns: 1fr 1fr; gap: 24px; } .pipeline-steps::before { display: none; }
+  .eda-section { padding: 60px 28px; } .eda-grid { grid-template-columns: 1fr; } .eda-findings { grid-template-columns: 1fr; }
+  .models-layout { grid-template-columns: 1fr; }
+  .stack-section { padding: 60px 28px; } .stack-grid { grid-template-columns: 1fr 1fr; }
+  .dataset-layout { grid-template-columns: 1fr; }
+  .charts-grid-top, .charts-grid-bottom { grid-template-columns: 1fr; }
+  .cta-section { padding: 60px 28px; }
+  .section-divider { margin: 0 28px; }
+  footer { padding: 28px; flex-direction: column; gap: 10px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Student<span>ML</span></a>
+  <ul class="nav-links">
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#eda">EDA</a></li>
+    <li><a href="#insights">Insights</a></li>
+    <li><a href="#models">Models</a></li>
+    <li><a href="#stack">Tech Stack</a></li>
+  </ul>
+  <a href="/predictdata" class="nav-cta">Try Predictor →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">End-to-End ML Project</div>
+    <h1 class="hero-title">Student Exam<br><em>Performance</em>Predictor</h1>
+    <p class="hero-desc">A full machine learning pipeline that analyses how gender, ethnicity, parental education, lunch type, and test preparation affect student math scores — trained and evaluated across 9 models on 1,000 real student records.</p>
+    <div class="hero-btns">
+      <a href="/predictdata" class="btn-primary">Try the Predictor →</a>
+      <a href="#pipeline" class="btn-secondary">Explore Project</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stat-card"><div class="stat-icon orange">🎯</div><div><div class="stat-num">88.06%</div><div class="stat-label">Best model R² — Ridge Regression</div></div></div>
+    <div class="stat-card"><div class="stat-icon blue">📊</div><div><div class="stat-num">1,000</div><div class="stat-label">Student records in the dataset</div></div></div>
+    <div class="stat-card"><div class="stat-icon green">🤖</div><div><div class="stat-num">9</div><div class="stat-label">ML models trained and compared</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider"/>
+
+<!-- PIPELINE -->
+<section id="pipeline" class="pipeline-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Project Architecture</div>
+    <h2 class="section-title">End-to-End ML Pipeline</h2>
+    <p class="section-sub">Built with a modular, production-ready structure — each stage is a separate component with logging, exception handling, and artifact persistence.</p>
+  </div>
+  <div class="pipeline-steps">
+    <div class="pipeline-step"><div class="step-num">1</div><div class="step-label">Data Ingestion</div><div class="step-desc">Reads raw CSV, performs 80/20 train-test split, saves artifacts to disk</div></div>
+    <div class="pipeline-step"><div class="step-num">2</div><div class="step-label">Data Transformation</div><div class="step-desc">StandardScaler for numerics, OneHotEncoder + imputation for categoricals via ColumnTransformer</div></div>
+    <div class="pipeline-step"><div class="step-num">3</div><div class="step-label">Model Training</div><div class="step-desc">GridSearchCV tunes 9 models; best model by R² is saved as model.pkl</div></div>
+    <div class="pipeline-step"><div class="step-num">4</div><div class="step-label">Predict Pipeline</div><div class="step-desc">Loads preprocessor.pkl and model.pkl to transform and score new inputs at inference time</div></div>
+    <div class="pipeline-step"><div class="step-num">5</div><div class="step-label">Flask Web App</div><div class="step-desc">REST API with a form UI — submits student data and returns a predicted math score</div></div>
+  </div>
+</section>
+
+<hr class="section-divider"/>
+
+<!-- EDA CARDS -->
+<section id="eda" class="eda-section">
+  <div class="eda-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Exploratory Data Analysis</div>
+      <h2 class="section-title">What the Data Reveals</h2>
+      <p class="section-sub">Before modelling, a thorough EDA was conducted across all variables — uncovering the strongest predictors of student performance.</p>
+    </div>
+    <div class="eda-grid">
+      <div class="eda-card"><div class="eda-card-num">ANALYSIS 01</div><div class="eda-card-title">Gender vs. Performance</div><div class="eda-card-desc">Histograms and boxplots split by gender reveal females consistently outscore males across all parental education levels and lead in overall pass percentage.</div></div>
+      <div class="eda-card"><div class="eda-card-num">ANALYSIS 02</div><div class="eda-card-title">Parental Education Impact</div><div class="eda-card-desc">Students with parents holding a master's or bachelor's degree score significantly higher. Higher education lifts the floor — the bottom 25% improve the most.</div></div>
+      <div class="eda-card"><div class="eda-card-num">ANALYSIS 03</div><div class="eda-card-title">Race &amp; Ethnicity Groups</div><div class="eda-card-desc">Group E students achieved the highest average scores across all subjects. Group A scored the lowest, reflecting socioeconomic patterns in academic outcomes.</div></div>
+      <div class="eda-card"><div class="eda-card-num">ANALYSIS 04</div><div class="eda-card-title">Lunch Type as a Proxy</div><div class="eda-card-desc">Students on standard lunch consistently outperform those on free/reduced lunch — a strong socioeconomic proxy and one of the top predictors in the final model.</div></div>
+      <div class="eda-card"><div class="eda-card-num">ANALYSIS 05</div><div class="eda-card-title">Test Preparation Course</div><div class="eda-card-desc">Students who completed the test prep course scored higher across all three subjects — math, reading, and writing — compared to those who skipped it.</div></div>
+      <div class="eda-card"><div class="eda-card-num">ANALYSIS 06</div><div class="eda-card-title">Score Correlations</div><div class="eda-card-desc">Pairplot analysis confirmed that math, reading, and writing scores increase linearly with each other — strong multicollinearity that benefits linear regression models.</div></div>
+    </div>
+    <div class="eda-findings">
+      <div class="finding"><div class="finding-dot"></div><div class="finding-text"><strong>Females lead in pass percentage</strong> and are top scorers across all parental education categories</div></div>
+      <div class="finding"><div class="finding-dot"></div><div class="finding-text"><strong>Master's degree group shows the widest gender gap</strong> — female median is notably higher than male in this group</div></div>
+      <div class="finding"><div class="finding-dot"></div><div class="finding-text"><strong>High school parent group has the most inconsistent scores</strong> — widest IQR and most spread in both genders</div></div>
+      <div class="finding"><div class="finding-dot"></div><div class="finding-text"><strong>All three scores increase linearly</strong> — a student who reads well also writes well and performs better in maths</div></div>
+      <div class="finding"><div class="finding-dot"></div><div class="finding-text"><strong>Parental education raises the floor</strong>, not just the ceiling — Q1 scores improve most with higher parental education</div></div>
+      <div class="finding"><div class="finding-dot"></div><div class="finding-text"><strong>Zero missing values</strong> in the dataset — no imputation required for EDA; clean data throughout</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CHARTS SECTION ── -->
+<section id="insights" class="charts-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Data Visualisations</div>
+    <h2 class="section-title">EDA Charts</h2>
+    <p class="section-sub">Key patterns from the dataset — built with real values from the EDA notebook.</p>
+  </div>
+
+  <!-- ROW 1: Model comparison (wide) + Gender avg scores (narrow) -->
+  <div class="charts-grid-top">
+
+    <!-- Chart 1: Model R² comparison — horizontal bar -->
+    <div class="chart-card">
+      <div class="chart-title">Model R² Score Comparison</div>
+      <div class="chart-subtitle">All 9 models evaluated on held-out test set — higher is better</div>
+      <div style="position:relative; width:100%; height:300px;">
+        <canvas id="modelChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 2: Avg score by gender -->
+    <div class="chart-card">
+      <div class="chart-title">Average Score by Gender</div>
+      <div class="chart-subtitle">Math, reading and writing across male vs female students</div>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-swatch" style="background:#378ADD"></span>Female</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#c8562a"></span>Male</span>
+      </div>
+      <div style="position:relative; width:100%; height:240px;">
+        <canvas id="genderChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: Parental education + Score scatter -->
+  <div class="charts-grid-bottom">
+
+    <!-- Chart 3: Avg math score by parental education -->
+    <div class="chart-card">
+      <div class="chart-title">Avg Math Score by Parental Education</div>
+      <div class="chart-subtitle">Higher parental education correlates with higher student scores</div>
+      <div style="position:relative; width:100%; height:260px;">
+        <canvas id="parentChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Chart 4: Score by lunch type & test prep — grouped -->
+    <div class="chart-card-dark">
+      <div class="chart-title-dark">Impact of Lunch &amp; Test Prep on Math Score</div>
+      <div class="chart-subtitle-dark">Average math score across lunch type and test preparation combinations</div>
+      <div class="chart-legend" style="margin-bottom:16px;">
+        <span class="legend-item-dark"><span class="legend-swatch" style="background:#c8562a"></span>Standard lunch</span>
+        <span class="legend-item-dark"><span class="legend-swatch" style="background:#5a5a5a"></span>Free/reduced lunch</span>
+      </div>
+      <div style="position:relative; width:100%; height:220px;">
+        <canvas id="lunchChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider"/>
+
+<!-- MODELS -->
+<section id="models" class="models-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Model Comparison</div>
+    <h2 class="section-title">9 Models. One Winner.</h2>
+    <p class="section-sub">Every model was trained with hyperparameter tuning via GridSearchCV and evaluated on a held-out test set using R² score.</p>
+  </div>
+  <div class="models-layout">
+    <div>
+      <div class="model-row"><span class="model-rank">#1</span><span class="model-name">Ridge Regression</span><div class="model-bar-wrap"><div class="model-bar best" style="width:88%"></div></div><span class="model-score">0.881</span><span class="best-badge">Best</span></div>
+      <div class="model-row"><span class="model-rank">#2</span><span class="model-name">Linear Regression</span><div class="model-bar-wrap"><div class="model-bar" style="width:87.9%"></div></div><span class="model-score">0.880</span></div>
+      <div class="model-row"><span class="model-rank">#3</span><span class="model-name">CatBoosting Regressor</span><div class="model-bar-wrap"><div class="model-bar" style="width:85.2%"></div></div><span class="model-score">0.852</span></div>
+      <div class="model-row"><span class="model-rank">#4</span><span class="model-name">Random Forest</span><div class="model-bar-wrap"><div class="model-bar" style="width:85.1%"></div></div><span class="model-score">0.851</span></div>
+      <div class="model-row"><span class="model-rank">#5</span><span class="model-name">AdaBoost Regressor</span><div class="model-bar-wrap"><div class="model-bar" style="width:84.7%"></div></div><span class="model-score">0.847</span></div>
+      <div class="model-row"><span class="model-rank">#6</span><span class="model-name">XGBRegressor</span><div class="model-bar-wrap"><div class="model-bar" style="width:82.8%"></div></div><span class="model-score">0.828</span></div>
+      <div class="model-row"><span class="model-rank">#7</span><span class="model-name">Lasso</span><div class="model-bar-wrap"><div class="model-bar" style="width:82.5%"></div></div><span class="model-score">0.825</span></div>
+      <div class="model-row"><span class="model-rank">#8</span><span class="model-name">K-Neighbors Regressor</span><div class="model-bar-wrap"><div class="model-bar" style="width:78.4%"></div></div><span class="model-score">0.784</span></div>
+      <div class="model-row"><span class="model-rank">#9</span><span class="model-name">Decision Tree</span><div class="model-bar-wrap"><div class="model-bar" style="width:76%"></div></div><span class="model-score">0.760</span></div>
+    </div>
+    <div class="winner-card">
+      <div class="winner-eyebrow">Best Performing Model</div>
+      <div class="winner-model-name">Ridge<br>Regression</div>
+      <div class="winner-metrics">
+        <div class="metric-box"><div class="metric-val">88.1%</div><div class="metric-label">R² Score</div></div>
+        <div class="metric-box"><div class="metric-val">5.39</div><div class="metric-label">RMSE</div></div>
+        <div class="metric-box"><div class="metric-val">4.21</div><div class="metric-label">MAE</div></div>
+      </div>
+      <p class="winner-desc">Ridge Regression topped the leaderboard — outperforming complex ensemble models like XGBoost and CatBoost. This is expected given the strong linear correlations between all three scores observed during EDA. The L2 regularisation prevents overfitting on the 800-sample training set. The trained model is serialised as <code style="color:#c8a080; font-size:12px">model.pkl</code> and loaded at inference time alongside the preprocessor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack" class="stack-section">
+  <div class="stack-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Technologies Used</div>
+      <h2 class="section-title">Built With</h2>
+      <p class="section-sub">A production-grade Python ML stack — from raw data to live web predictions.</p>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card"><span class="stack-icon">🐼</span><div class="stack-name">Pandas &amp; NumPy</div><div class="stack-role">Data ingestion, cleaning, feature engineering and array manipulation throughout the pipeline</div><span class="stack-tag tag-data">Data</span></div>
+      <div class="stack-card"><span class="stack-icon">🤖</span><div class="stack-name">Scikit-learn</div><div class="stack-role">ColumnTransformer, StandardScaler, OneHotEncoder, Pipeline, GridSearchCV, and all regression models</div><span class="stack-tag tag-ml">ML</span></div>
+      <div class="stack-card"><span class="stack-icon">⚡</span><div class="stack-name">XGBoost &amp; CatBoost</div><div class="stack-role">Gradient boosted tree models compared against linear baselines — CatBoost ranked 3rd overall</div><span class="stack-tag tag-ml">ML</span></div>
+      <div class="stack-card"><span class="stack-icon">📊</span><div class="stack-name">Matplotlib &amp; Seaborn</div><div class="stack-role">EDA visualisations — histograms, boxplots, pairplots, count plots and bar charts</div><span class="stack-tag tag-viz">Viz</span></div>
+      <div class="stack-card"><span class="stack-icon">🌶️</span><div class="stack-name">Flask</div><div class="stack-role">Lightweight web framework serving the prediction form and rendering results via Jinja2 templates</div><span class="stack-tag tag-web">Web</span></div>
+      <div class="stack-card"><span class="stack-icon">💾</span><div class="stack-name">Pickle / Joblib</div><div class="stack-role">Serialises trained model and preprocessor as .pkl artifacts for reuse at inference time</div><span class="stack-tag tag-ml">ML</span></div>
+      <div class="stack-card"><span class="stack-icon">📦</span><div class="stack-name">Setuptools</div><div class="stack-role">Packages the project as an installable Python module via setup.py with auto-detected packages</div><span class="stack-tag tag-data">Infra</span></div>
+      <div class="stack-card"><span class="stack-icon">📓</span><div class="stack-name">Jupyter Notebooks</div><div class="stack-role">Two notebooks: full EDA with visualisations and model training experiments with side-by-side comparison</div><span class="stack-tag tag-viz">Research</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DATASET -->
+<section id="dataset" class="dataset-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Dataset Overview</div>
+    <h2 class="section-title">The Data Behind the Model</h2>
+    <p class="section-sub">Sourced from Kaggle — a clean, well-structured dataset of student exam results with no missing values across 1,000 records.</p>
+  </div>
+  <div class="dataset-layout">
+    <div class="feature-list">
+      <div class="feature-row"><span class="feature-type ft-cat">Cat</span><span class="feature-name">gender</span><span class="feature-vals">male / female</span></div>
+      <div class="feature-row"><span class="feature-type ft-cat">Cat</span><span class="feature-name">race_ethnicity</span><span class="feature-vals">Group A – E</span></div>
+      <div class="feature-row"><span class="feature-type ft-cat">Cat</span><span class="feature-name">parental_level_of_education</span><span class="feature-vals">6 levels</span></div>
+      <div class="feature-row"><span class="feature-type ft-cat">Cat</span><span class="feature-name">lunch</span><span class="feature-vals">standard / free/reduced</span></div>
+      <div class="feature-row"><span class="feature-type ft-cat">Cat</span><span class="feature-name">test_preparation_course</span><span class="feature-vals">none / completed</span></div>
+      <div class="feature-row"><span class="feature-type ft-num">Num</span><span class="feature-name">reading_score</span><span class="feature-vals">0 – 100</span></div>
+      <div class="feature-row"><span class="feature-type ft-num">Num</span><span class="feature-name">writing_score</span><span class="feature-vals">0 – 100</span></div>
+      <div class="feature-row"><span class="feature-type ft-tgt">Target</span><span class="feature-name">math_score</span><span class="feature-vals">0 – 100 ← predicted</span></div>
+    </div>
+    <div class="dataset-stats">
+      <div class="ds-stat"><div class="ds-stat-num">1,000 <span>rows</span></div><div class="ds-stat-label">Total student records with zero missing values</div></div>
+      <div class="ds-mini-grid">
+        <div class="ds-mini"><div class="ds-mini-num">8</div><div class="ds-mini-label">Total columns</div></div>
+        <div class="ds-mini"><div class="ds-mini-num">5</div><div class="ds-mini-label">Categorical features</div></div>
+        <div class="ds-mini"><div class="ds-mini-num">800</div><div class="ds-mini-label">Training samples</div></div>
+        <div class="ds-mini"><div class="ds-mini-num">200</div><div class="ds-mini-label">Test samples (20%)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">See the Model in Action</h2>
+    <p class="cta-sub">Enter a student's profile and get an instant predicted math score from the trained Ridge Regression model.</p>
+    <a href="/predictdata" class="cta-btn">Open the Predictor →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Student<span>ML</span></div>
+  <div class="footer-note">Built with Python · Scikit-learn · Flask · Kaggle Dataset</div>
+</footer>
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.color = '#78746e';
+
+/* ── CHART 1: Model R² horizontal bar ── */
+new Chart(document.getElementById('modelChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Decision Tree','K-Neighbors','Lasso','XGBoost','AdaBoost','Random Forest','CatBoost','Linear Reg.','Ridge'],
+    datasets: [{
+      data: [0.760, 0.784, 0.825, 0.828, 0.847, 0.851, 0.852, 0.880, 0.881],
+      backgroundColor: ['#d4cfc5','#d4cfc5','#d4cfc5','#d4cfc5','#d4cfc5','#d4cfc5','#d4cfc5','#e8b89e','#c8562a'],
+      borderRadius: 4,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ' R² = ' + ctx.parsed.x.toFixed(3) } }
+    },
+    scales: {
+      x: {
+        min: 0.70, max: 0.92,
+        grid: { color: '#ece8e0' },
+        ticks: { callback: v => v.toFixed(2) }
+      },
+      y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+    }
+  }
+});
+
+/* ── CHART 2: Avg score by gender (grouped bar) ── */
+new Chart(document.getElementById('genderChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Math', 'Reading', 'Writing'],
+    datasets: [
+      { label: 'Female', data: [63.6, 72.6, 72.5], backgroundColor: '#378ADD', borderRadius: 6, borderSkipped: false },
+      { label: 'Male',   data: [68.7, 65.5, 63.3], backgroundColor: '#c8562a', borderRadius: 6, borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { min: 55, max: 80, grid: { color: '#ece8e0' } }
+    }
+  }
+});
+
+/* ── CHART 3: Avg math score by parental education ── */
+new Chart(document.getElementById('parentChart'), {
+  type: 'bar',
+  data: {
+    labels: ["Some H.S.", "High School", "Some College", "Associate's", "Bachelor's", "Master's"],
+    datasets: [{
+      label: 'Avg Math Score',
+      data: [63.5, 62.2, 67.1, 67.9, 69.4, 69.7],
+      backgroundColor: ['#d4cfc5','#c4bfb5','#e8b89e','#d4956a','#c8562a','#9e3e1c'],
+      borderRadius: 6,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ' Avg math: ' + ctx.parsed.y.toFixed(1) } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { min: 55, max: 76, grid: { color: '#ece8e0' } }
+    }
+  }
+});
+
+/* ── CHART 4: Lunch + test prep impact on math score ── */
+new Chart(document.getElementById('lunchChart'), {
+  type: 'bar',
+  data: {
+    labels: ['No Prep', 'Completed Prep'],
+    datasets: [
+      { label: 'Standard lunch',      data: [70.0, 75.2], backgroundColor: '#c8562a', borderRadius: 6, borderSkipped: false },
+      { label: 'Free / reduced lunch', data: [58.3, 65.8], backgroundColor: '#4a4a4a', borderRadius: 6, borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#888' } },
+      y: {
+        min: 50, max: 80,
+        grid: { color: 'rgba(255,255,255,0.07)' },
+        ticks: { color: '#888' }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
