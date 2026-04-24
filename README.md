@@ -259,7 +259,7 @@ All 9 models were evaluated on the held-out test set (200 samples) using R² sco
 | Category | Libraries |
 |---|---|
 | Data processing | `pandas`, `numpy` |
-| ML models | `scikit-learn`, `xgboost`, `catboost` |
+| ML models | `scikit-learn`, `xgboost`, `catboost`, `Regression`, `K-NN`, `Decision Tree`, `Random Forest` |
 | Preprocessing | `StandardScaler`, `OneHotEncoder`, `ColumnTransformer`, `Pipeline` |
 | Hyperparameter tuning | `GridSearchCV` |
 | Visualisation | `matplotlib`, `seaborn` |
